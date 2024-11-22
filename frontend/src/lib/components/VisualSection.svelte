@@ -47,7 +47,10 @@
 		{@const { bg, fg } = colors[i]}
 		{@const opt = globals.OPTIONS[showing[i]]}
 		{@const onclick = getNextReadingFunc(i)}
-		<div class="cluster-reading" style={i === readings.length - 1 ? "grid-column: span 2" : ""}>
+		<div
+			class="cluster-reading"
+			style:grid-column={readings.length % 2 === 1 && i === readings.length - 1 ? "span 2" : ""}
+		>
 			<div class="reading-circle" style:background-color={bg} {onclick}>
 				<p style:color={fg}>
 					Cluster {i + 1}<br />
@@ -83,6 +86,8 @@
 		aspect-ratio: 1;
 
 		border-radius: 50%;
+
+		cursor: pointer;
 	}
 
 	.reading-circle > p {
@@ -92,5 +97,6 @@
 			1px -1px 0 #000,
 			-1px 1px 0 #000,
 			1px 1px 0 #000;
+		user-select: none;
 	}
 </style>
