@@ -3,10 +3,10 @@ export const SOIL_COLOR = [0x3d, 0x26, 0x1f];
 export const OPTIONS = ["temperature", "humidity", "moisture"];
 
 export const EXTREMES = [
-    { min: 10, max: 25 }, // temperature
-    { min: 0, max: 100 }, // humidity
-    { min: 0, max: 500 }, // moisture
-].map(({ min, max }) => ({ min, max, rng: max - min }));
+    { min: 10, max: 35, inverse: false }, // temperature
+    { min: 0, max: 100, inverse: false }, // humidity
+    { min: 500, max: 1000, inverse: true }, // moisture
+].map(({ min, max, inverse }) => ({ min, max, inverse, rng: max - min }));
 
 export const COLORS = [
     { low: [255, 255, 240], high: [255, 255, 0] }, // temperature

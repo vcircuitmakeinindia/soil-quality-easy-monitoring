@@ -1,24 +1,17 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Main from "$lib/components/Main.svelte";
+  import api from "$lib/api";
 	import globals from "$lib/globals";
 
-	let readings = $state([
-		{ temperature: 15, humidity: 71, moisture: 461 },
-		{ temperature: 19, humidity: 64, moisture: 389 },
-		{ temperature: 23, humidity: 38, moisture: 277 }
-	]);
+	let readings = $state([]);
+
+  const update = () => api.getData().then(data => readings = data);
 
 	onMount(() => {
-		const interval = setInterval(() => {
-			// fetch from API
-			for (let i = 0; i < readings.length; i++) {
-				for (let key of Object.keys(readings[i])) {
-					const { min, max } = globals.EXTREMES[globals.OPTIONS.indexOf(key)];
-					readings[i][key] = Math.round(Math.random() * (max - min) + min);
-				}
-			}
-		}, 1000);
+    // fetching data from api
+    update();
+		const interval = setInterval(update, 10000);
 		return () => clearInterval(interval);
 	});
 </script>

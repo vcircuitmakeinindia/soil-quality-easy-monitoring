@@ -5,8 +5,7 @@
 
 	const { readings } = $props();
 
-	const showing = $state(Array(readings.length).fill(0));
-
+	let showing = $state(Array(readings.length).fill(0));
 	let container = $state();
 	let colors = $state(Array(readings.length).fill({}));
 
@@ -17,10 +16,11 @@
 	};
 
 	const getCircleColors = () => {
-		for (let i = 0; i < colors.length; i++) {
+		for (let i = 0; i < readings.length; i++) {
+      if (showing[i] == null) showing = Array(readings.length).fill(0);
 			const { low, high } = globals.COLORS[showing[i]];
-			const { min, max } = globals.EXTREMES[showing[i]];
-			const p = utils.findP(min, max, readings[i][globals.OPTIONS[showing[i]]]);
+			const { min, max, inverse: inv } = globals.EXTREMES[showing[i]];
+			const p = utils.findP(min, max, inv, readings[i][globals.OPTIONS[showing[i]]]);
 			const color = [...utils.colorP(low, high, p), globals.ALPHA];
 			colors[i] = {
 				fg: "white",
@@ -29,6 +29,7 @@
 		}
 	};
 
+	$effect(() => readings && (adjustCircles(), getCircleColors()));
 	$effect(() => showing && getCircleColors());
 
 	const nextReading = (i: number) => {
@@ -43,21 +44,23 @@
 </script>
 
 <div id="visual-container" bind:this={container}>
-	{#each readings as _, i}
-		{@const { bg, fg } = colors[i]}
-		{@const opt = globals.OPTIONS[showing[i]]}
-		{@const onclick = getNextReadingFunc(i)}
-		<div
-			class="cluster-reading"
-			style:grid-column={readings.length % 2 === 1 && i === readings.length - 1 ? "span 2" : ""}
-		>
-			<div class="reading-circle" style:background-color={bg} {onclick}>
-				<p style:color={fg}>
-					Cluster {i + 1}<br />
-					{opt[0].toUpperCase() + opt.slice(1)}
-				</p>
+	{#each readings as c, i}
+		{#if colors[i] != null && showing[i] != null}
+			{@const { bg, fg } = colors[i]}
+			{@const opt = globals.OPTIONS[showing[i]]}
+			{@const onclick = getNextReadingFunc(i)}
+			<div
+				class="cluster-reading"
+				style:grid-column={readings.length % 2 === 1 && i === readings.length - 1 ? "span 2" : ""}
+			>
+				<div class="reading-circle" style:background-color={bg} {onclick}>
+					<p style:color={fg}>
+						Cluster {c.cluster_no}<br />
+						{opt[0].toUpperCase() + opt.slice(1)}
+					</p>
+				</div>
 			</div>
-		</div>
+		{/if}
 	{/each}
 </div>
 

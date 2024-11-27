@@ -1,4 +1,4 @@
-export const findP = (l: number, h: number, v: number) => (v - l) / (h - l);
+export const findP = (l: number, h: number, inv: boolean, v: number) => !inv ? (v - l) / (h - l) : (h - v) / (h - l);
 export const findV = (l: number, h: number, p: number) => l + p * (h - l);
 export const colorP = (l: number[], h: number[], p: number) => Object.keys(l).map((i) => findV(l[parseInt(i)], h[parseInt(i)], p));
 export const rgbaToHex = (rgba: number[]) => "#" + rgba.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");

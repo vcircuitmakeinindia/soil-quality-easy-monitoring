@@ -14,9 +14,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each readings as cluster, i}
+			{#each readings as cluster}
 				<tr>
-					<td>{i + 1}</td>
+					<td>{cluster.cluster_no}</td>
 					<td>{cluster.temperature}</td>
 					<td>{cluster.humidity}</td>
 					<td>{cluster.moisture}</td>
