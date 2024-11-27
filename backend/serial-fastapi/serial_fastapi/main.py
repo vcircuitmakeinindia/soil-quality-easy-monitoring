@@ -13,13 +13,10 @@ def sqm():
     sleep(3)
     print(time.time())
     output = []
-    try:
-        output.append(json.loads(ser.readline().decode("utf-8").strip()))
-        sleep(1)
-        output.append(json.loads(ser.readline().decode("utf-8").strip()))
-        sleep(1)
-        output.append(json.loads(ser.readline().decode("utf-8").strip()))
-    except json.decoder.JSONDecodeError:
-        output = []
+    output.append(json.loads(ser.readline().decode("utf-8").strip()))
+    sleep(1)
+    output.append(json.loads(ser.readline().decode("utf-8").strip()))
+    sleep(1)
+    output.append(json.loads(ser.readline().decode("utf-8").strip()))
     print(output)
     return {"data": output}
