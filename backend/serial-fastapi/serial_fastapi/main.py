@@ -19,4 +19,4 @@ def sqm():
     sleep(1)
     output.append(json.loads(ser.readline().decode("utf-8").strip()))
     print(output)
-    return {"data": output}
+    return output
