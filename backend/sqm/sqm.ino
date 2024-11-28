@@ -65,6 +65,8 @@ void loop() {
 //  }
 
   Serial.println("{\"cluster_no\": 1, \"humidity\": " + String(hh) + ", \"temperature\": " + String(th) + ", \"moisture\": " + analogRead(smh) + "}");
+  delay(500);
   Serial.println("{\"cluster_no\": 2, \"humidity\": " + String(hx) + ", \"temperature\": " + String(tx) + ", \"moisture\": " + analogRead(smx) + "}");
+  delay(500);
   Serial.println("{\"cluster_no\": 3, \"humidity\": " + String((hh + hx)/2) + ", \"temperature\": " + String((th + tx)/2) + ", \"moisture\": " + analogRead(smy) + "}");
 }

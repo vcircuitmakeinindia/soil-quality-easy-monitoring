@@ -1,9 +1,9 @@
 import globals from "./globals";
 
-const ENDPOINT = "http://192.168.XX.XX:XXXX/sqm";
+const ENDPOINT = "http://localhost:5000/sqm";
 
 export async function getData() {
-	return genMockData(); // comment to fetch from api
+//	return genMockData(); // comment to fetch from api
 	const resp = await fetch(ENDPOINT);
 	if (resp.status !== 200) return genMockData();
 	try {
